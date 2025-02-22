@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
-import 'package:sweetclick/login.dart';
+//import 'package:sweetclick/login.dart';
+import 'package:sweetclick/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const LoginScreen(),
+      home: Home_screen(initialValue: "Nombre de usuario",),
     );
   }
 }
