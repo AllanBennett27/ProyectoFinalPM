@@ -31,6 +31,8 @@ late String username;
        
 
     return MaterialApp(
+      
+      debugShowCheckedModeBanner: false,
        home: Scaffold(
       
       //My background
@@ -53,6 +55,43 @@ late String username;
 
       body: Column(
         children: [
+          
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            // ignore: sized_box_for_whitespace
+            child: Container(
+            
+              width: 300,
+              height: 200,
+            
+                
+                child: Stack(
+                children: [
+                    Image.network("https://media.tenor.com/CgRQNtNwE-oAAAAM/desserts-food.gif",
+                                   fit: BoxFit.cover,
+                                   width: double.infinity, 
+                                  height: double.infinity,
+                                ),
+                   
+                    Center(
+                      child: Text(
+                        "¿Que se antoja hoy?",
+                        style: TextStyle(
+                            backgroundColor: Color.fromARGB(255, 156, 3, 75).withValues(alpha: 0.5),
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            )
+                        ,)
+                        ,),
+                ]
+                )
+               
+              
+               
+            ),
+          ),
+
            Expanded(
             child: Center(
               child: SearchAnchor(
