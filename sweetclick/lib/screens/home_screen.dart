@@ -18,7 +18,7 @@ class Home_screen extends StatefulWidget{
 
 class HomePageState extends State <Home_screen>{
 late String username;
-
+//  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -28,7 +28,7 @@ late String username;
   }
   @override
   Widget build(BuildContext context) {
-       
+    
 
     return MaterialApp(
       
@@ -45,12 +45,59 @@ late String username;
                    
                   style: TextStyle(color: Colors.black)
                   ),
+        
           
         ),
         backgroundColor: Colors.white70,
+        
+        leading: Builder(
+          
+          builder: (context){
+            return Container(
+                margin: EdgeInsets.all(8), 
+                decoration: BoxDecoration(
+                color: Colors.pink, 
+                borderRadius: BorderRadius.circular(8),
+
+                
+                ),
+                child: IconButton(
+                  onPressed: (){
+                    Scaffold.of(context).openDrawer();
+                  },
+                 icon: Icon(Icons.menu, color: Colors.white)
+                 )
+                
+                   
+            );
+            
+          },
+        ),
+        
 
       ),
       
+      drawer: Drawer(
+       
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.pink,
+              
+                ),
+              child: Text('Menu',
+              style: TextStyle(
+                       color: Colors.white,
+                       fontWeight: FontWeight.bold,
+                       )
+                       
+              ),
+            )
+          ],
+        ),
+      ),
           
 
       body: Column(
@@ -77,7 +124,7 @@ late String username;
                       child: Text(
                         "¿Que se antoja hoy?",
                         style: TextStyle(
-                            backgroundColor: Color.fromARGB(255, 156, 3, 75).withValues(alpha: 0.5),
+                            backgroundColor: Colors.pink.withValues(alpha: 0.5),
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 24,
@@ -140,25 +187,46 @@ late String username;
             ),
             ),
           ),
-
-          Container(
-            
-            height: 100,
-             margin: EdgeInsets.symmetric(horizontal: 16.0),
-            alignment: Alignment.bottomRight,
-            decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20), 
-                          color: const Color.fromARGB(255, 156, 3, 75)),
-           
-           
-
-          ),
         ],
-
-
+       
       ),
 
-   
+
+      bottomNavigationBar: Container(
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10), 
+      decoration: BoxDecoration(
+        color: Colors.pink, 
+        borderRadius: BorderRadius.circular(20), 
+      ),
+      child: ClipRRect( 
+        borderRadius: BorderRadius.circular(20),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.transparent, 
+          iconSize: 30,
+          selectedFontSize: 16,
+          unselectedFontSize: 12,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart),
+              label: 'Cart',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person ),
+            
+              label: 'User',
+            ),
+          ],
+          currentIndex: 1,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.black,
+        ),
+      ),
+    ),
     )
     );
   }
