@@ -49,6 +49,7 @@ class HomePageState extends State <Home_screen>{
                                    fit: BoxFit.cover,
                                    width: double.infinity, 
                                   height: double.infinity,
+                                  repeat: ImageRepeat.repeat,
                                 ),
                    
                     Center(

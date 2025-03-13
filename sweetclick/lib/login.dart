@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sweetclick/loginPage.dart';
+import 'package:sweetclick/register.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -24,7 +26,7 @@ class LoginScreen extends StatelessWidget {
               // Botón de Registro con Correo
               ElevatedButton.icon(
                 onPressed: () {
-                  // Aquí va la lógica de registro
+                  Navigator.push(context,MaterialPageRoute(builder: (_)=>RegisterScreen()));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromRGBO(191, 82, 105, 1), // Rosita
@@ -56,7 +58,7 @@ class LoginScreen extends StatelessWidget {
               // 🔗 Enlace "¿Ya tienes cuenta? Inicia sesión"
               GestureDetector(
                 onTap: () {
-                  // Navegar al login
+                  Navigator.push(context,MaterialPageRoute(builder: (_)=>Loginpage()));
                 },
                 child: const Text(
                   '¿Ya tienes cuenta? Inicia sesión',

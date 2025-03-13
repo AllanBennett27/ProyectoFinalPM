@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sweetclick/screens/home_screen.dart';
 import 'package:sweetclick/screens/shopcart_screen.dart';
@@ -134,6 +135,16 @@ class InitialScreen extends StatefulWidget {
                 title: Text('User'),
                 onTap: () {
                   _onItemTapped(2);
+                   Navigator.of(context).pop();
+                
+               
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.logout_outlined, color: Colors.pink),
+                title: Text('Logout'),
+                onTap: () {
+                  FirebaseAuth.instance.signOut();
                    Navigator.of(context).pop();
                 
                
