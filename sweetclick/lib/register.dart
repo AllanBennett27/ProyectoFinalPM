@@ -26,14 +26,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
       print("Teléfono: $phone");
       print("Contraseña: $password");
       
-      // Aquí podrías enviar los datos a una base de datos o backend
+      
 
       // Mostrar un mensaje de éxito
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Cuenta creada con éxito')),
       );
 
-      // Opcional: Redirigir a la pantalla de login o inicio
+      
     } else {
       // Mostrar mensaje de error
       ScaffoldMessenger.of(context).showSnackBar(
@@ -81,7 +81,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             // Botón de Crear cuenta
             ElevatedButton(
               onPressed: _saveData,
-              style: ElevatedButton.styleFrom(
+                style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFFC25668),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),

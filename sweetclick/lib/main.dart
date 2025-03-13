@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:sweetclick/login.dart';
+import 'package:sweetclick/products_screen.dart';
+import 'package:sweetclick/register.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const LoginScreen(),
+      home: ProductsScreen(),
     );
   }
 }
@@ -31,8 +33,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      // Aquí iría la navegación a la pantalla principal
-      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+
+      // Aquí esta la navegación.. nos permite ir al login directamente despues del splash
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
     });
   }
 

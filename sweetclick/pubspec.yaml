@@ -59,6 +59,10 @@ flutter:
 
   assets:
     - assets/logo.png 
+    - assets/cheesecake.png
+    - assets/chocolate_cake.png
+    - assets/tres_leches.png
+    - assets/selva_negra.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

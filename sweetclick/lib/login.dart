@@ -1,75 +1,113 @@
 import 'package:flutter/material.dart';
+import 'register.dart'; 
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(241, 241, 241, 1),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Logo
-              Image.asset(
-                'assets/logo.png', // Asegúrate de tener la imagen en assets/logo.png
-                height: 350,
+      backgroundColor: Color(0xFFF5F5F5),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 60),
+            Image.asset('assets/logo.png', width: 250), // Tu logo
+            SizedBox(height: 20),
+
+            Divider(
+              color: const Color.fromARGB(255, 255, 255, 255),
+              thickness: 1,
+              indent: 40,
+              endIndent: 40,
+            ),
+
+            SizedBox(height: 20),
+
+            Text(
+              "Inicia sesión",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 15),
+
+            // Campos de entrada
+            CustomTextField(icon: Icons.email, hintText: "Correo electrónico"),
+            CustomTextField(icon: Icons.lock, hintText: "Contraseña", isPassword: true),
+
+            SizedBox(height: 15),
+
+            // Botón de iniciar sesión
+            ElevatedButton(
+              onPressed: () {
+                // Aquí iría la lógica para iniciar sesión
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromRGBO(191, 82, 105, 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
               ),
+              child: Text("Iniciar sesión", style: TextStyle(color: Colors.white, fontSize: 16)),
+            ),
 
-              const SizedBox(height: 40),
+            SizedBox(height: 10),
 
-              // Botón de Registro con Correo
-              ElevatedButton.icon(
-                onPressed: () {
-                  // Aquí va la lógica de registro
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(191, 82, 105, 1), // Rosita
-                  minimumSize: const Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                icon: const Icon(Icons.person, color: Colors.white),
-                label: const Text(
-                  'Registro con correo electrónico',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
+            // Texto de registro con navegación a la pantalla de registro
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterScreen()), // Navega a la pantalla de registro
+                );
+              },
+              child: Text(
+                "¿No tienes cuenta? Regístrate",
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
-
-              const SizedBox(height: 30),
-
-              // Texto "Crear nueva cuenta"
-              const Text(
-                'Crear nueva cuenta',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 10),
-
-              // 🔗 Enlace "¿Ya tienes cuenta? Inicia sesión"
-              GestureDetector(
-                onTap: () {
-                  // Navegar al login
-                },
-                child: const Text(
-                  '¿Ya tienes cuenta? Inicia sesión',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+// Widget personalizado para los campos de texto
+class CustomTextField extends StatelessWidget {
+  final IconData icon;
+  final String hintText;
+  final bool isPassword;
+
+  const CustomTextField({
+    required this.icon,
+    required this.hintText,
+    this.isPassword = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 15),
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(191, 82, 105, 1),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.white),
+          SizedBox(width: 10),
+          Expanded(
+            child: TextField(
+              obscureText: isPassword,
+              decoration: InputDecoration(
+                hintText: hintText,
+                hintStyle: TextStyle(color: Colors.white),
+                border: InputBorder.none,
+              ),
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
       ),
     );
   }
