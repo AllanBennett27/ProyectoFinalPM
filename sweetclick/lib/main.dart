@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sweetclick/firebase_options.dart';
 import 'package:sweetclick/login.dart';
-import 'package:sweetclick/register.dart';
 import 'dart:async';
 //import 'package:sweetclick/login.dart';
 
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:  SplashScreen()
+      home:  SplashScreen(),
       //  InitialScreen(initialValue: "Nombre de usuario",),
     );
   }

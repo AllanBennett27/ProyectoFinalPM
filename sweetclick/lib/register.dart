@@ -1,6 +1,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sweetclick/login.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -98,7 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               // Botón de Cancelar
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context); // Regresar a la pantalla anterior
+                 Navigator.push(context,MaterialPageRoute(builder: (_)=>LoginScreen()));// Regresar a la pantalla anterior
                 },
                 child: Text("Cancelar", style: TextStyle(color: Colors.black, fontSize: 16)),
               ),

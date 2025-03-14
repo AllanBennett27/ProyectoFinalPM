@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sweetclick/screens/add_desserts.dart';
 import 'package:sweetclick/screens/home_screen.dart';
 import 'package:sweetclick/screens/shopcart_screen.dart';
 import 'package:sweetclick/screens/user_screen.dart';
@@ -146,6 +147,16 @@ class InitialScreen extends StatefulWidget {
                 onTap: () {
                   FirebaseAuth.instance.signOut();
                    Navigator.of(context).pop();
+                
+               
+                },
+              ),
+               ListTile(
+                leading: Icon(Icons.add, color: Colors.pink),
+                title: Text('Add a new dessert'),
+                onTap: () {
+                   Navigator.push(context,MaterialPageRoute(builder: (_)=>AddDesserts()));
+                   
                 
                
                 },
