@@ -46,59 +46,61 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF5F5F5),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 60),
-            Image.asset('assets/logo.png', width: 350),
-            SizedBox(height: 20),
-
-            Divider(
-      color: Colors.white,
-      thickness: 5,  // Grosor de la línea
-      indent: 40,    // Espaciado desde los lados
-      endIndent: 40, // Espaciado desde los lados
-    ),
-    
-    SizedBox(height: 20), // Espacio entre la línea y el título
-
-            Text(
-              "Crear nueva cuenta",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 60),
+              Image.asset('assets/logo.png', width: 350),
+              SizedBox(height: 20),
+        
+              Divider(
+        color: Colors.white,
+        thickness: 5,  // Grosor de la línea
+        indent: 40,    // Espaciado desde los lados
+        endIndent: 40, // Espaciado desde los lados
             ),
-            SizedBox(height: 15),
-
-            // Campos de entrada
-            CustomTextField(icon: Icons.person, hintText: "Nombre Completo", controller: _nameController),
-            CustomTextField(icon: Icons.email, hintText: "Correo electrónico", controller: _emailController),
-            CustomTextField(icon: Icons.phone, hintText: "Número de celular", controller: _phoneController),
-            CustomTextField(icon: Icons.lock, hintText: "Contraseña", isPassword: true, controller: _passwordController),
-
-            SizedBox(height: 15),
-
-            // Botón de Crear cuenta
-            ElevatedButton(
-              onPressed: _saveData,
-                style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFC25668),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+            
+            SizedBox(height: 20), // Espacio entre la línea y el título
+        
+              Text(
+                "Crear nueva cuenta",
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
-              child: Text("Crear cuenta", style: TextStyle(color: Colors.white, fontSize: 16)),
-            ),
-
-            SizedBox(height: 10),
-
-            // Botón de Cancelar
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // Regresar a la pantalla anterior
-              },
-              child: Text("Cancelar", style: TextStyle(color: Colors.black, fontSize: 16)),
-            ),
-          ],
+              SizedBox(height: 15),
+        
+              // Campos de entrada
+              CustomTextField(icon: Icons.person, hintText: "Nombre Completo", controller: _nameController),
+              CustomTextField(icon: Icons.email, hintText: "Correo electrónico", controller: _emailController),
+              CustomTextField(icon: Icons.phone, hintText: "Número de celular", controller: _phoneController),
+              CustomTextField(icon: Icons.lock, hintText: "Contraseña", isPassword: true, controller: _passwordController),
+        
+              SizedBox(height: 15),
+        
+              // Botón de Crear cuenta
+              ElevatedButton(
+                onPressed: _saveData,
+                  style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFFC25668),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+                ),
+                child: Text("Crear cuenta", style: TextStyle(color: Colors.white, fontSize: 16)),
+              ),
+        
+              SizedBox(height: 10),
+        
+              // Botón de Cancelar
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Regresar a la pantalla anterior
+                },
+                child: Text("Cancelar", style: TextStyle(color: Colors.black, fontSize: 16)),
+              ),
+            ],
+          ),
         ),
       ),
     );
