@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "620923779952",
+    "project_id": "app-sweetclick",
+    "storage_bucket": "app-sweetclick.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620923779952:android:828ea2bf0566cd61d3edb5",
+        "android_client_info": {
+          "package_name": "com.example.sweetclick"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDdvUZyrWdhpHT8RzKurJWsoCFydVVfnE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

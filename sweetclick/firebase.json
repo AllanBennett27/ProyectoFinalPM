@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"app-sweetclick","appId":"1:620923779952:android:828ea2bf0566cd61d3edb5","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"app-sweetclick","configurations":{"android":"1:620923779952:android:828ea2bf0566cd61d3edb5","web":"1:620923779952:web:2671ccb1561065bad3edb5"}}}}}}
