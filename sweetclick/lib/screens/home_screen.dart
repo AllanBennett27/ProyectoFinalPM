@@ -1,5 +1,8 @@
 
+
 import 'package:flutter/material.dart';
+import 'package:sweetclick/Services/crud.dart';
+import 'package:sweetclick/screens/product_view_screen.dart';
 
 
 // ignore: camel_case_types
@@ -18,6 +21,7 @@ class Home_screen extends StatefulWidget{
      
 
 class HomePageState extends State <Home_screen>{
+  final CRUDBakery _crudBakery = CRUDBakery();
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +43,9 @@ class HomePageState extends State <Home_screen>{
             // ignore: sized_box_for_whitespace
             child: Container(
             
-              width: 350,
-              height: 250,
-              
+              width: 300,
+              height: 200,
+            
                 
                 child: Stack(
                 children: [
@@ -49,6 +53,7 @@ class HomePageState extends State <Home_screen>{
                                    fit: BoxFit.cover,
                                    width: double.infinity, 
                                   height: double.infinity,
+                                  repeat: ImageRepeat.repeat,
                                 ),
                    
                     Center(
@@ -69,14 +74,14 @@ class HomePageState extends State <Home_screen>{
                
             ),
           ),
-
-           SizedBox(height: 20,),
-            Center(
+  
+             SizedBox(height: 20,),         
+             Center(
               child: SearchAnchor(
               builder: (BuildContext context, SearchController controller) {
                 
                 return Container(
-                  height: 40,
+                  height: 42,
                    padding: EdgeInsets.symmetric(horizontal: 32.0),
             
                   child: SearchBar(
@@ -117,7 +122,74 @@ class HomePageState extends State <Home_screen>{
               },
             ),
             ),
+             SizedBox(height: 10,),    
           
+
+
+           FutureBuilder(
+            future: _crudBakery.getDesserts(),
+            builder: (context, snapshot) {
+              if(snapshot.connectionState == ConnectionState.waiting){
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if(!snapshot.hasData){
+                return const Text("No data here");
+              }
+              
+              return Expanded( 
+              child: GridView.builder( 
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, 
+                    crossAxisSpacing: 10, 
+                    mainAxisSpacing: 10, 
+                    childAspectRatio: 1, 
+                      ),
+              
+                      itemCount:snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        var dessert = snapshot.data![index].data() as Map<String, dynamic>;
+
+                        return SizedBox(
+                           width: 50, 
+                           height: 150,
+                          child: GestureDetector(
+                            onTap: (){
+                              Navigator.push(context,MaterialPageRoute(builder: (_)=>ProductViewScreen(dessert: dessert)));
+                            },
+                            child: Card( 
+                              shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                              margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                              elevation: 10,
+                            
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                Image.network(
+                                dessert['imageUrl'], 
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
+                              ),
+                              ListTile(
+                                title: Text(dessert['name']), 
+                                subtitle: Text(
+                                    '\$${dessert['price']}'), 
+                               ),
+                                ],
+                              ), 
+                            ),
+                          ),
+                        ); 
+                      }, 
+                    ), 
+                  
+                       );
+            },
+           ), 
+                   
         ],
        
       ),
