@@ -13,7 +13,7 @@ class _ShopcartScreenState extends State<ShopcartScreen> {
     return Scaffold(
      body: Center(
          child: Text(
-                  "Shopcart screen workin progress",
+                  "Shopcart screen working progress",
                   style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.normal,

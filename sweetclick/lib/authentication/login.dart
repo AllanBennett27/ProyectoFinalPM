@@ -1,49 +1,38 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sweetclick/authentication/register.dart';
 
-class RegisterScreen extends StatefulWidget {
+import 'package:sweetclick/screens/initial_screen.dart';
+
+class LoginScreen extends StatefulWidget {
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   // Controladores para capturar la información ingresada
-  final TextEditingController _nameController = TextEditingController();
+
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
 
   // Función para guardar la información
-  void _saveData() {
-    String name = _nameController.text;
-    String email = _emailController.text;
-    String phone = _phoneController.text;
-    String password = _passwordController.text;
-
-    if (name.isNotEmpty && email.isNotEmpty && phone.isNotEmpty && password.isNotEmpty) {
-      print("✅ Cuenta creada con éxito");
-      print("Nombre: $name");
-      print("Correo: $email");
-      print("Teléfono: $phone");
-      print("Contraseña: $password");
-      
-      
-
-      // Mostrar un mensaje de éxito
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Cuenta creada con éxito')),
-      );
-
-      
-    } else {
-      // Mostrar mensaje de error
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Por favor, completa todos los campos')),
-      );
+ Future<void> loginUserwithEmailAndPassword()async{
+    try{
+      final UserCredential =  await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+        );
+     print(UserCredential);
     }
-  }
+    on FirebaseAuthException catch (e){
+      print(e.message);
+    }
+ }
 
   @override
   Widget build(BuildContext context) {
+ 
     return Scaffold(
       backgroundColor: Color(0xFFF5F5F5),
       body: SingleChildScrollView(
@@ -52,53 +41,77 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 60),
-              Image.asset('assets/logo.png', width: 350),
+              SizedBox(height: 40),
+              Container(
+                height:250,
+                width:250,
+               
+                alignment: Alignment.center,
+                child: Image.asset('assets/logo.png',fit: BoxFit.cover)
+                
+                ),
               SizedBox(height: 20),
         
               Divider(
         color: Colors.white,
-        thickness: 5,  // Grosor de la línea
-        indent: 40,    // Espaciado desde los lados
-        endIndent: 40, // Espaciado desde los lados
+        thickness: 5,  
+        indent: 40,   
+        endIndent: 40, 
             ),
             
-            SizedBox(height: 20), // Espacio entre la línea y el título
+            SizedBox(height: 10), 
         
               Text(
-                "Crear nueva cuenta",
+                "Iniciar sesion",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 15),
         
               // Campos de entrada
-              CustomTextField(icon: Icons.person, hintText: "Nombre Completo", controller: _nameController),
+            
               CustomTextField(icon: Icons.email, hintText: "Correo electrónico", controller: _emailController),
-              CustomTextField(icon: Icons.phone, hintText: "Número de celular", controller: _phoneController),
+      
               CustomTextField(icon: Icons.lock, hintText: "Contraseña", isPassword: true, controller: _passwordController),
         
               SizedBox(height: 15),
         
               // Botón de Crear cuenta
               ElevatedButton(
-                onPressed: _saveData,
-                  style: ElevatedButton.styleFrom(
+                onPressed: ()async{
+                  await loginUserwithEmailAndPassword();
+                  final user = FirebaseAuth.instance.currentUser;
+                  
+                  if (user != null) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => InitialScreen(initialValue: user.displayName ?? "Usuario")),
+                  );
+                }
+                
+                },
+                style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFC25668),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                 ),
-                child: Text("Crear cuenta", style: TextStyle(color: Colors.white, fontSize: 16)),
+                child: Text("Inicia sesion", style: TextStyle(color: Colors.white, fontSize: 16)),
               ),
         
               SizedBox(height: 10),
         
               // Botón de Cancelar
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context); // Regresar a la pantalla anterior
-                },
-                child: Text("Cancelar", style: TextStyle(color: Colors.black, fontSize: 16)),
+             TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => RegisterScreen()), // Navega a la pantalla de registro
+                );
+              },
+              child: Text(
+                "¿No tienes cuenta? Regístrate",
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
+            ),
             ],
           ),
         ),

@@ -39,9 +39,9 @@ class HomePageState extends State <Home_screen>{
             // ignore: sized_box_for_whitespace
             child: Container(
             
-              width: 300,
-              height: 200,
-            
+              width: 350,
+              height: 250,
+              
                 
                 child: Stack(
                 children: [
@@ -70,13 +70,13 @@ class HomePageState extends State <Home_screen>{
             ),
           ),
 
-           Expanded(
-            child: Center(
+           SizedBox(height: 20,),
+            Center(
               child: SearchAnchor(
               builder: (BuildContext context, SearchController controller) {
                 
                 return Container(
-                  height: 42,
+                  height: 40,
                    padding: EdgeInsets.symmetric(horizontal: 32.0),
             
                   child: SearchBar(
@@ -117,7 +117,7 @@ class HomePageState extends State <Home_screen>{
               },
             ),
             ),
-          ),
+          
         ],
        
       ),
