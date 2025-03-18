@@ -18,6 +18,7 @@ class InitialScreen extends StatefulWidget {
 }
 
     class _InitialScreenState extends State<InitialScreen> {
+      final user = FirebaseAuth.instance.currentUser!.uid;
       late String username;
 
       int _selectedIndex = 0;
@@ -152,7 +153,7 @@ class InitialScreen extends StatefulWidget {
                
                 },
               ),
-              if(username == "Administrador")
+              if( user == "5gHtW0ewpjWc3sKPKLrNdNGWfwl1")
                ListTile(
                 leading: Icon(Icons.control_point, color: Colors.pink),
                 title: Text('Manage desserts'),

@@ -43,6 +43,44 @@ class CRUDBakery {
     }
   }
 
+  //update
+
+  Future<void> updateDessert(
+    String docID,
+     String description,
+   String imageUrl,
+    String name,
+     double price,
+     String type  
+  ) async{
+    try{
+      final dessert =FirebaseFirestore.instance.collection("Desserts");
+         return dessert.doc(docID).update   ({
+       "date": FieldValue.serverTimestamp(),
+        "description": description,
+        "imageUrl": imageUrl,
+        "name": name,
+        "price": price,
+        "type": type
+      });
+   
+
+    }catch(e){
+      print(e);
+    }
+  }
+
+
+
+  //delete
+ 
+  Future<void> deleteDessert(String docID) {
+  final dessert =FirebaseFirestore.instance.collection("Desserts");
+
+    return dessert.doc(docID).delete();
+  }
+
+
 
   // //Create
   // Future<void> addNote(String title, String content, String type){
