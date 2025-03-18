@@ -12,6 +12,7 @@ class CRUDBakery {
     required String imageUrl,
     required String name,
     required double price,
+    required String type
   }) async{
     try{
      final data = await FirebaseFirestore.instance.collection("Desserts").add({
@@ -20,6 +21,7 @@ class CRUDBakery {
         "imageUrl": imageUrl,
         "name": name,
         "price": price,
+        "type": type
       });
       print(data.id);
 

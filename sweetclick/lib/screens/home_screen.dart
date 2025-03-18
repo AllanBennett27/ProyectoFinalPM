@@ -163,7 +163,7 @@ class HomePageState extends State <Home_screen>{
                             borderRadius: BorderRadius.circular(15)),
                               margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                               elevation: 10,
-                            
+                             
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -176,7 +176,7 @@ class HomePageState extends State <Home_screen>{
                               ListTile(
                                 title: Text(dessert['name']), 
                                 subtitle: Text(
-                                    '\$${dessert['price']}'), 
+                                    '${dessert['type']}\n\$${dessert['price']}'), 
                                ),
                                 ],
                               ), 

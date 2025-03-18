@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sweetclick/authentication/login.dart';
 import 'package:sweetclick/screens/add_desserts.dart';
 import 'package:sweetclick/screens/home_screen.dart';
 import 'package:sweetclick/screens/shopcart_screen.dart';
@@ -146,11 +147,12 @@ class InitialScreen extends StatefulWidget {
                 title: Text('Logout'),
                 onTap: () {
                   FirebaseAuth.instance.signOut();
-                   Navigator.of(context).pop();
+                    Navigator.push(context,MaterialPageRoute(builder: (_)=>LoginScreen()));
                 
                
                 },
               ),
+              if(username == "Administrador")
                ListTile(
                 leading: Icon(Icons.add, color: Colors.pink),
                 title: Text('Add a new dessert'),

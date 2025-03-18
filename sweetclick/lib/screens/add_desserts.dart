@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:sweetclick/Services/crud.dart';
+import 'package:sweetclick/services/crud.dart';
+
 
 class AddDesserts extends StatefulWidget {
   const AddDesserts({super.key});
@@ -17,6 +17,18 @@ class _AddDessertsState extends State<AddDesserts> {
   final TextEditingController imageUrlcontroller = TextEditingController();
   final TextEditingController namecontroller = TextEditingController();
   final TextEditingController pricecontroller = TextEditingController();
+   final TextEditingController typecontroller = TextEditingController();
+
+    String? _postreSeleccionado;
+
+   List<String> tiposDePostres = [
+   'Tortas',
+  'Postres fríos',
+  'Postres calientes',
+  'Galletas y brownies',
+  'Helados',
+  'Otros',
+];
 
   final _formKey = GlobalKey<FormState>();
 
@@ -37,6 +49,7 @@ class _AddDessertsState extends State<AddDesserts> {
     imageUrlcontroller.clear();
     namecontroller.clear();
     pricecontroller.clear();
+    typecontroller.clear();
 
   }
  
@@ -149,15 +162,48 @@ class _AddDessertsState extends State<AddDesserts> {
                 ),
                  SizedBox(height: 20,),
 
+                 DropdownButtonFormField<String>(
+                decoration: InputDecoration(
+                  labelText: "Select your type of dessert",
+
+                ),
+                value: _postreSeleccionado,
+                items: tiposDePostres.map((String postres){
+                  return DropdownMenuItem(
+                    value: postres,
+                    child: Text(postres),
+                  
+                  );
+                }).toList(),
+                onChanged: (String? newValue){
+                  setState(() {
+                    _postreSeleccionado = newValue;
+                  });
+                  typecontroller.text = newValue ?? '';
+                },
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return "Please select a type of dessert";
+                  }
+                  return null;
+                },
+                ),
+
+                  SizedBox(height: 10,),
+
                 Center(
                   child: ElevatedButton(
                     onPressed: (){
+                      
                       if(validateForm(_formKey)){
                         CRUDBakery().UploadDessert(
                          description: descriptioncontroller.text.trim(), 
                          imageUrl: imageUrlcontroller.text.trim(),
                           name: namecontroller.text.trim(), 
-                          price: double.tryParse(pricecontroller.text) ?? 0.0,);
+                          price: double.tryParse(pricecontroller.text) ?? 0.0,
+                           type: typecontroller.text.trim(),
+                          );
+                         
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("Added dessert")),
                           );
