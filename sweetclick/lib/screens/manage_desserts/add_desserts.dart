@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:sweetclick/services/crud.dart';
+
 
 
 class AddDesserts extends StatefulWidget {
@@ -58,11 +60,7 @@ class _AddDessertsState extends State<AddDesserts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Create desserts", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-        centerTitle: true,
-        backgroundColor: Colors.pink,
-      ),
+      
       body: 
       SingleChildScrollView(
         child: Padding(
@@ -225,6 +223,6 @@ class _AddDessertsState extends State<AddDesserts> {
       ),
       
 
-    );
+    ); //<----
   }
 }

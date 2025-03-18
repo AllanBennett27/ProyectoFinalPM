@@ -55,7 +55,7 @@ class ProductViewScreen extends StatelessWidget {
                     const SizedBox(height: 10),
                     // Precio del postre
                     Text(
-                      "Precio: \$${dessert['price']}",
+                      "Precio: Lps.${dessert['price']}",
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,

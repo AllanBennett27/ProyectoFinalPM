@@ -31,18 +31,17 @@ class CRUDBakery {
   }
 
 
-  //Read
-     Future<List<QueryDocumentSnapshot>> getDesserts() async {
+  Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getDesserts() {
     try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Desserts').get();
-      return querySnapshot.docs; 
+      return FirebaseFirestore.instance
+          .collection('Desserts')
+          .snapshots()
+          .map((querySnapshot) => querySnapshot.docs);
     } catch (e) {
       print("Error getting desserts: $e");
-      return []; 
+      return Stream.value([]); 
     }
   }
-  
-
 
 
   // //Create

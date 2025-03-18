@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sweetclick/authentication/login.dart';
-import 'package:sweetclick/screens/add_desserts.dart';
+import 'package:sweetclick/screens/manage_desserts/manage_desserts.dart';
 import 'package:sweetclick/screens/home_screen.dart';
 import 'package:sweetclick/screens/shopcart_screen.dart';
 import 'package:sweetclick/screens/user_screen.dart';
@@ -154,10 +154,10 @@ class InitialScreen extends StatefulWidget {
               ),
               if(username == "Administrador")
                ListTile(
-                leading: Icon(Icons.add, color: Colors.pink),
-                title: Text('Add a new dessert'),
+                leading: Icon(Icons.control_point, color: Colors.pink),
+                title: Text('Manage desserts'),
                 onTap: () {
-                   Navigator.push(context,MaterialPageRoute(builder: (_)=>AddDesserts()));
+                   Navigator.push(context,MaterialPageRoute(builder: (_)=>ManageDesserts()));
                    
                 
                
