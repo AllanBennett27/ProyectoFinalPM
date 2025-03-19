@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CRUDBakery {
-   
   
-
-
   //CRUD Desserts
   //Create
   Future<void> UploadDessert({

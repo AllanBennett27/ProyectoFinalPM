@@ -21,6 +21,7 @@ class _ShopcartScreenState extends State<ShopcartScreen> {
       appBar: AppBar(
         title: const Text("Carrito de Compras"),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: _crudBakery.getCart(user), 
