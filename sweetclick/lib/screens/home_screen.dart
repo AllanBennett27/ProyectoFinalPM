@@ -72,11 +72,12 @@ class HomePageState extends State<Home_screen> {
               suggestionsBuilder:
                   (BuildContext context, SearchController controller) {
                 final List<String> items = [
-                  'Pasteles',
-                  'Tartas',
-                  'Galletas',
-                  'Helados',
-                  'Dulces de temporada'
+                   'Tortas',
+                    'Postres fríos',
+                    'Postres calientes',
+                    'Galletas y brownies',
+                    'Helados',
+                    'Otros',
                 ];
 
                 return List<ListTile>.generate(items.length, (int index) {
@@ -119,6 +120,7 @@ class HomePageState extends State<Home_screen> {
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     var dessert = snapshot.data![index].data();
+                   
 
                     return SizedBox(
                       width: 50,
@@ -128,7 +130,7 @@ class HomePageState extends State<Home_screen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => ProductViewScreen(dessert: dessert),
+                              builder: (_) => DessertDetailScreen(dessert: dessert,),
                             ),
                           );
                         },
