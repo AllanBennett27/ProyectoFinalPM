@@ -5,7 +5,10 @@ import 'package:sweetclick/authentication/register.dart';
 import 'package:sweetclick/screens/initial_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _LoginScreenState createState() => _LoginScreenState();
 }
 
@@ -19,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // Función para guardar la información
  Future<void> loginUserwithEmailAndPassword()async{
     try{
+      // ignore: non_constant_identifier_names
       final UserCredential =  await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
@@ -84,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (user != null) {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (_) => InitialScreen(initialValue: user.displayName ?? "Usuario")),
+                    MaterialPageRoute(builder: (_) => InitialScreen(initialValue: user.displayName ?? "Usuario", PfpValue: user.photoURL ?? "https://www.webiconio.com/_upload/255/image_255.svg",)),
                   );
                 }
                 

@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
           if(snapshot.data != null){
             final user = snapshot.data as User;
             
-             return InitialScreen(initialValue: user.displayName ?? "Nombre de usuario");
+             return InitialScreen(initialValue: user.displayName ?? "Nombre de usuario", PfpValue: user.photoURL ?? "");
           }
           return LoginScreen();
         }

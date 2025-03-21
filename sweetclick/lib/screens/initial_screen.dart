@@ -9,8 +9,9 @@ import 'package:sweetclick/screens/user_screen.dart';
 class InitialScreen extends StatefulWidget {
   
   final String initialValue;
+  final String PfpValue;
 
-  const InitialScreen({super.key, required this.initialValue});
+  const InitialScreen({super.key, required this.initialValue, required this.PfpValue});
 
 
   @override
@@ -20,6 +21,7 @@ class InitialScreen extends StatefulWidget {
     class _InitialScreenState extends State<InitialScreen> {
       final user = FirebaseAuth.instance.currentUser!.uid;
       late String username;
+      late String pfpUrl;
 
       int _selectedIndex = 0;
 
@@ -40,7 +42,9 @@ class InitialScreen extends StatefulWidget {
       void initState() {
         super.initState();
         username = widget.initialValue;
+        pfpUrl = widget.PfpValue;
         print("initial state ${widget.initialValue}");
+        print("pfpUrl en InitialScreen: $pfpUrl");
       }
 
   @override
@@ -97,18 +101,43 @@ class InitialScreen extends StatefulWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
+             DrawerHeader(
               
               decoration: BoxDecoration(
                 color: Colors.pink,
               
                 ),
-              child: Text('Menu',
-              style: TextStyle(
-                       color: Colors.white,
-                       fontWeight: FontWeight.bold,
-                       )
-                       
+              
+              child: Column(
+                children: [
+                        ClipOval(
+                  
+                    child: Image.network(
+                      pfpUrl,
+                      width: 100, 
+                      height: 100, 
+                      fit: BoxFit.cover, 
+                        loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child; 
+                        return Center(
+                          child: CircularProgressIndicator(), 
+                        );
+                      },
+                      errorBuilder: (context, error, stackTrace) {
+                        return Icon(Icons.error); 
+                      },
+                    
+                    
+                    ),
+                  ),
+                  Text( username,
+                  style: TextStyle(
+                           color: Colors.white,
+                           fontWeight: FontWeight.bold,
+                           )
+                           
+                  ),
+                ],
               ),
               
               
@@ -153,7 +182,7 @@ class InitialScreen extends StatefulWidget {
                
                 },
               ),
-              if( user == "5gHtW0ewpjWc3sKPKLrNdNGWfwl1")
+              if( user == "5gHtW0ewpjWc3sKPKLrNdNGWfwl1" || user == "OKcD1keUMcX6bwNvsepZ7JzTIu72")
                ListTile(
                 leading: Icon(Icons.control_point, color: Colors.pink),
                 title: Text('Manage desserts'),

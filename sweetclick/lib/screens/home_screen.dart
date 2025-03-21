@@ -30,7 +30,8 @@ class HomePageState extends State<Home_screen> {
               child: Stack(
                 children: [
                   Image.network(
-                    "https://media.tenor.com/CgRQNtNwE-oAAAAM/desserts-food.gif",
+                "https://media.tenor.com/CgRQNtNwE-oAAAAM/desserts-food.gif",
+                
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,

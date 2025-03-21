@@ -13,6 +13,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _photoUrlController = TextEditingController();
 
   
 
@@ -21,14 +22,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
     try{
         final UserCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: _emailController.text.trim(), 
-      password: _passwordController.text.trim(),
-      
+      password: _passwordController.text.trim(),  
    
       );
 
        if (UserCredential.user != null) {
       await UserCredential.user!.updateDisplayName(_nameController.text.trim());
-      await UserCredential.user!.reload(); // Recargar usuario para aplicar cambios
+
+        if (_photoUrlController.text.trim().isNotEmpty) {
+          await UserCredential.user!.updatePhotoURL(_photoUrlController.text.trim());
+        }
+
+      await UserCredential.user!.reload(); 
       print("Usuario creado: ${UserCredential.user!.displayName}");
     }
       
@@ -43,6 +48,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
     
     
   }
+  
+    void resetForm(){
+  
+    _nameController.clear();
+    _emailController.clear();
+    _phoneController.clear();
+    _passwordController.clear();
+    _photoUrlController.clear();
+
+  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -78,19 +94,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
               CustomTextField(icon: Icons.email, hintText: "Correo electrónico", controller: _emailController),
               CustomTextField(icon: Icons.phone, hintText: "Número de celular", controller: _phoneController),
               CustomTextField(icon: Icons.lock, hintText: "Contraseña", isPassword: true, controller: _passwordController),
+              CustomTextField(icon: Icons.image, hintText: "Profile picture url", controller: _photoUrlController),
         
               SizedBox(height: 15),
         
               // Botón de Crear cuenta
               ElevatedButton(
-                onPressed: ()async{
-                  await createUserwithEmailandPassword();
-                } ,
-                style: ElevatedButton.styleFrom(
+                  style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFC25668),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                 ),
+                onPressed: ()async{
+                                  await createUserwithEmailandPassword().then((_) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Cuenta creada con éxito"),
+                          backgroundColor: Colors.green, 
+                          duration: Duration(seconds: 3), 
+                        ),
+                        
+                      );
+                      resetForm();
+                    }).catchError((error) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Error al crear la cuenta: $error"),
+                          backgroundColor: Colors.red, 
+                          duration: Duration(seconds: 3), 
+                        ),
+                      );
+                    });
+                  },
                 child: Text("Crear cuenta", style: TextStyle(color: Colors.white, fontSize: 16)),
               ),
         
@@ -98,10 +133,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
         
               // Botón de Cancelar
               TextButton(
+                  style: TextButton.styleFrom(
+                  backgroundColor: Color(0xFFC25668),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+                ),
                 onPressed: () {
                  Navigator.push(context,MaterialPageRoute(builder: (_)=>LoginScreen()));// Regresar a la pantalla anterior
                 },
-                child: Text("Cancelar", style: TextStyle(color: Colors.black, fontSize: 16)),
+                child: Text("Cancelar", style: TextStyle(color: Colors.white, fontSize: 16)),
               ),
               SizedBox(height: 30),
             ],
