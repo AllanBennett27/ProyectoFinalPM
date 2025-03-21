@@ -4,6 +4,7 @@ import 'package:sweetclick/screens/product_view_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sweetclick/services/crud.dart';
 
+// ignore: camel_case_types
 class Home_screen extends StatefulWidget {
   const Home_screen({super.key});
 
@@ -13,7 +14,7 @@ class Home_screen extends StatefulWidget {
 
 class HomePageState extends State<Home_screen> {
   final CRUDBakery _crudBakery = CRUDBakery();
-  // final user = FirebaseAuth.instance.currentUser;
+    final SearchController _searchController = SearchController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class HomePageState extends State<Home_screen> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: Container(
+            child: SizedBox(
               width: 300,
               height: 200,
               child: Stack(
@@ -53,17 +54,18 @@ class HomePageState extends State<Home_screen> {
           const SizedBox(height: 20),
           Center(
             child: SearchAnchor(
+              searchController: _searchController,
               builder: (BuildContext context, SearchController controller) {
                 return Container(
                   height: 42,
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: SearchBar(
-                    controller: controller,
+                    controller: _searchController,
                     onTap: () {
-                      controller.openView();
+                      _searchController.openView();
                     },
                     onChanged: (_) {
-                      controller.openView();
+                      _searchController.openView();
                     },
                     leading: const Icon(Icons.search),
                   ),
@@ -86,7 +88,7 @@ class HomePageState extends State<Home_screen> {
                     title: Text(item),
                     onTap: () {
                       setState(() {
-                        controller.closeView(item);
+                        _searchController.closeView(item);
                       });
                     },
                   );
@@ -94,6 +96,10 @@ class HomePageState extends State<Home_screen> {
               },
             ),
           ),
+
+
+
+
           const SizedBox(height: 10),
           StreamBuilder<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(
             stream: _crudBakery.getDesserts(), 
@@ -121,7 +127,7 @@ class HomePageState extends State<Home_screen> {
                   itemBuilder: (context, index) {
                     var dessert = snapshot.data![index].data();
                    
-
+                    if(_searchController.text.isEmpty || _searchController.text == dessert["type"].toString()){
                     return SizedBox(
                       width: 50,
                       height: 150,
@@ -155,27 +161,17 @@ class HomePageState extends State<Home_screen> {
                                   '${dessert['type']}\n Lps.${dessert['price']}',
                                 ),
                               ),
-                              // if (user?.displayName == "Administrador")
-                              //   Row(
-                              //     mainAxisAlignment: MainAxisAlignment.center,
-                              //     children: [
-                              //       TextButton(
-                              //         onPressed: () {},
-                              //         child: const Icon(Icons.edit),
-                              //       ),
-                              //       const SizedBox(width: 5),
-                              //       TextButton(
-                              //         onPressed: () {},
-                              //         child: const Icon(Icons.delete),
-                              //       ),
-                              //     ],
-                              //   ),
+                            
                             ],
                           ),
                         ),
                       ),
                     );
-                  },
+                    }
+                    else {
+                      return const SizedBox.shrink(); 
+                    }
+                    },
                 ),
               );
             },
