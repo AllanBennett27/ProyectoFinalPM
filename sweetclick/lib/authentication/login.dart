@@ -87,8 +87,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () async {
                   await loginUserwithEmailAndPassword();
                   final user = FirebaseAuth.instance.currentUser;
-
-                  if (user != null) {
+                  String email = _emailController.text.trim();
+                  String password = _passwordController.text.trim();
+                  if (user != null && email.isNotEmpty && password.isNotEmpty) {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
