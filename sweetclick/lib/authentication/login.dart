@@ -20,23 +20,22 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   // Función para guardar la información
- Future<void> loginUserwithEmailAndPassword()async{
-    try{
+  Future<void> loginUserwithEmailAndPassword() async {
+    try {
       // ignore: non_constant_identifier_names
-      final UserCredential =  await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final UserCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
-        );
-     print(UserCredential);
-    }
-    on FirebaseAuthException catch (e){
+      );
+      print(UserCredential);
+    } on FirebaseAuthException catch (e) {
       print(e.message);
     }
- }
+  }
 
   @override
   Widget build(BuildContext context) {
- 
     return Scaffold(
       backgroundColor: Color(0xFFF5F5F5),
       body: SingleChildScrollView(
@@ -47,75 +46,87 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               SizedBox(height: 40),
               Container(
-                height:250,
-                width:250,
-               
-                alignment: Alignment.center,
-                child: Image.asset('assets/logo.png',fit: BoxFit.cover)
-                
-                ),
+                  height: 250,
+                  width: 250,
+                  alignment: Alignment.center,
+                  child: Image.asset('assets/logo.png', fit: BoxFit.cover)),
               SizedBox(height: 20),
-        
+
               Divider(
-        color: Colors.white,
-        thickness: 5,  
-        indent: 40,   
-        endIndent: 40, 
-            ),
-            
-            SizedBox(height: 10), 
-        
+                color: Colors.white,
+                thickness: 5,
+                indent: 40,
+                endIndent: 40,
+              ),
+
+              SizedBox(height: 10),
+
               Text(
                 "Iniciar sesion",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 15),
-        
+
               // Campos de entrada
-            
-              CustomTextField(icon: Icons.email, hintText: "Correo electrónico", controller: _emailController),
-      
-              CustomTextField(icon: Icons.lock, hintText: "Contraseña", isPassword: true, controller: _passwordController),
-        
+
+              CustomTextField(
+                  icon: Icons.email,
+                  hintText: "Correo electrónico",
+                  controller: _emailController),
+
+              CustomTextField(
+                  icon: Icons.lock,
+                  hintText: "Contraseña",
+                  isPassword: true,
+                  controller: _passwordController),
+
               SizedBox(height: 15),
-        
+
               // Botón de Crear cuenta
               ElevatedButton(
-                onPressed: ()async{
+                onPressed: () async {
                   await loginUserwithEmailAndPassword();
                   final user = FirebaseAuth.instance.currentUser;
-                  
+
                   if (user != null) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => InitialScreen(initialValue: user.displayName ?? "Usuario", PfpValue: user.photoURL ?? "https://www.webiconio.com/_upload/255/image_255.svg",)),
-                  );
-                }
-                
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => InitialScreen(
+                                initialValue: user.displayName ?? "Usuario",
+                                PfpValue: user.photoURL ??
+                                    "https://www.webiconio.com/_upload/255/image_255.svg",
+                              )),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFC25668),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                 ),
-                child: Text("Inicia sesion", style: TextStyle(color: Colors.white, fontSize: 16)),
+                child: Text("Inicia sesion",
+                    style: TextStyle(color: Colors.white, fontSize: 16)),
               ),
-        
+
               SizedBox(height: 10),
-        
+
               // Botón de Cancelar
-             TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => RegisterScreen()), // Navega a la pantalla de registro
-                );
-              },
-              child: Text(
-                "¿No tienes cuenta? Regístrate",
-                style: TextStyle(color: Colors.black, fontSize: 16),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) =>
+                            RegisterScreen()), // Navega a la pantalla de registro
+                  );
+                },
+                child: Text(
+                  "¿No tienes cuenta? Regístrate",
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
               ),
-            ),
             ],
           ),
         ),

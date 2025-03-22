@@ -214,4 +214,27 @@ class CRUDBakery {
       print(e);
     }
   }
+
+  //PAGO DE PEDIDO
+//ADD
+  Future<void> UploadPayment({
+    required String total,
+    required String numerotarjeta,
+    required String fechavencimiento,
+    required String cvv,
+  }) async {
+    try {
+      final docRef = FirebaseFirestore.instance.collection("Payment").doc();
+      await docRef.set({
+        "total": total,
+        "numerotarjeta": numerotarjeta,
+        "fechavencimiento": fechavencimiento,
+        "cvv": cvv,
+        "date": FieldValue.serverTimestamp(),
+      });
+      print(docRef.id);
+    } catch (e) {
+      print(e);
+    }
+  }
 }

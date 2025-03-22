@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sweetclick/screens/initial_screen.dart';
 
 class SuccessScreen extends StatelessWidget {
   @override
@@ -19,7 +21,10 @@ class SuccessScreen extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color.fromRGBO(191, 82, 105, 1).withOpacity(0.7), Color.fromRGBO(191, 82, 105, 1).withOpacity(0.7)],
+                        colors: [
+                          Color.fromRGBO(191, 82, 105, 1).withOpacity(0.7),
+                          Color.fromRGBO(191, 82, 105, 1).withOpacity(0.7)
+                        ],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
@@ -38,21 +43,27 @@ class SuccessScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
-          Icon(Icons.favorite, color: Color.fromRGBO(191, 82, 105, 1), size: 50),
+          Icon(Icons.favorite,
+              color: Color.fromRGBO(191, 82, 105, 1), size: 50),
           SizedBox(height: 10),
           Text(
             'Su pago ha sido efectuado\nexitosamente.',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 18),
           ),
-          Spacer(),
-          BottomNavigationBar(
-            backgroundColor: Color.fromRGBO(191, 82, 105, 1),
-            items: [
-              BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.white), label: ''),
-              BottomNavigationBarItem(icon: Icon(Icons.shopping_cart, color: Colors.white), label: ''),
-              BottomNavigationBarItem(icon: Icon(Icons.person, color: Colors.white), label: ''),
-            ],
+          IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () {
+              final user = FirebaseAuth.instance.currentUser;
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => InitialScreen(
+                            initialValue: user?.displayName ?? "Usuario",
+                            PfpValue: user?.photoURL ??
+                                "https://www.webiconio.com/_upload/255/image_255.svg",
+                          )));
+            },
           ),
         ],
       ),

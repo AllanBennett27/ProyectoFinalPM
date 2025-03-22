@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sweetclick/pantalla_pago.dart';
 import 'package:sweetclick/services/crud.dart';
 
 class ShopcartScreen extends StatefulWidget {
@@ -162,6 +163,21 @@ class _ShopcartScreenState extends State<ShopcartScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    //Boton de Pago
+                    IconButton(
+                      icon: const Icon(Icons.payment),
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => PaymentScreen()));
+                      },
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    //Boton de Eliminar Masivo
                     IconButton(
                       icon: const Icon(Icons.delete_forever),
                       onPressed: () async {

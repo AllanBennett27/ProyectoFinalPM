@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:sweetclick/authentication/register.dart';
 import 'package:sweetclick/firebase_options.dart';
 import 'package:sweetclick/authentication/login.dart';
+import 'package:sweetclick/pantalla_exito.dart';
 import 'dart:async';
 //import 'package:sweetclick/login.dart';
 
@@ -13,7 +14,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
-
 }
 
 class MyApp extends StatelessWidget {
@@ -21,11 +21,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:  SplashScreen()
-      //  InitialScreen(initialValue: "Nombre de usuario",),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: SplashScreen()
+        //  InitialScreen(initialValue: "Nombre de usuario",),
+        );
   }
 }
 
@@ -42,29 +40,26 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 3), () {
       // Aquí iría la navegación a la pantalla principal
-     Navigator.pushReplacement(context, 
-     MaterialPageRoute(
-      builder: (_) 
-      => 
-      StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if(snapshot.connectionState == ConnectionState.waiting ){
-            return Center(
-            child: CircularProgressIndicator(),
-            );
-          }
-          if(snapshot.data != null){
-            final user = snapshot.data as User;
-            
-             return InitialScreen(initialValue: user.displayName ?? "Nombre de usuario", PfpValue: user.photoURL ?? "");
-          }
-          return LoginScreen();
-        }
-      )
-      
-      
-      ));
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (_) => StreamBuilder(
+                  stream: FirebaseAuth.instance.authStateChanges(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (snapshot.data != null) {
+                      final user = snapshot.data as User;
+
+                      return InitialScreen(
+                          initialValue: user.displayName ?? "Nombre de usuario",
+                          PfpValue: user.photoURL ?? "");
+                    }
+                    return LoginScreen();
+                  })));
     });
   }
 
@@ -73,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(241, 241, 241, 1),
       body: Center(
-        child: Image.asset('assets/logo.png', width: 350), 
+        child: Image.asset('assets/logo.png', width: 350),
       ),
     );
   }
