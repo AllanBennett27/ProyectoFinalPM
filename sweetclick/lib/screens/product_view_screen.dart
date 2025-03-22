@@ -1,27 +1,24 @@
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sweetclick/screens/PostresPersonalizados/postre_personalizado_screen.dart';
 import 'package:sweetclick/services/crud.dart';
-
 
 class DessertDetailScreen extends StatefulWidget {
   final Map<String, dynamic> dessert;
 
-  const DessertDetailScreen({Key? key, required this.dessert}) : super(key: key);
+  const DessertDetailScreen({Key? key, required this.dessert})
+      : super(key: key);
 
   @override
   _DessertDetailScreenState createState() => _DessertDetailScreenState();
 }
 
 class _DessertDetailScreenState extends State<DessertDetailScreen> {
-  
   final CRUDBakery _crudBakery = CRUDBakery();
 
   @override
   Widget build(BuildContext context) {
-    
     final userId = FirebaseAuth.instance.currentUser!.uid;
-  
 
     return Scaffold(
       appBar: AppBar(
@@ -31,7 +28,6 @@ class _DessertDetailScreenState extends State<DessertDetailScreen> {
       ),
       body: Stack(
         children: [
-         
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -39,7 +35,6 @@ class _DessertDetailScreenState extends State<DessertDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                 
                     Image.network(
                       widget.dessert['imageUrl'],
                       width: 300,
@@ -47,7 +42,6 @@ class _DessertDetailScreenState extends State<DessertDetailScreen> {
                       fit: BoxFit.cover,
                     ),
                     const SizedBox(height: 10),
-                  
                     Text(
                       widget.dessert['name'],
                       style: const TextStyle(
@@ -56,7 +50,6 @@ class _DessertDetailScreenState extends State<DessertDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                   
                     Text(
                       "Descripción de producto",
                       style: const TextStyle(fontSize: 16),
@@ -69,7 +62,6 @@ class _DessertDetailScreenState extends State<DessertDetailScreen> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 10),
-                   
                     Text(
                       "Precio: Lps.${widget.dessert['price']}",
                       style: const TextStyle(
@@ -79,7 +71,6 @@ class _DessertDetailScreenState extends State<DessertDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                
                     Text(
                       "Tipo: ${widget.dessert['type']}",
                       style: const TextStyle(fontSize: 16),
@@ -90,44 +81,71 @@ class _DessertDetailScreenState extends State<DessertDetailScreen> {
               ),
             ),
           ),
-
-        
           Container(
             alignment: Alignment.bottomCenter,
             padding: EdgeInsets.all(10),
-            child: ElevatedButton(
-              onPressed: () async {
-                
-                
-                await _crudBakery.addToCart(
-                  userId: userId,
-                  dessertId: widget.dessert["id"], 
-                  quantity: 1, 
-                  price: widget.dessert['price'],
-                  imageUrl: widget.dessert['imageUrl'],
-                  name: widget.dessert['name'],
-                );
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    await _crudBakery.addToCart(
+                      userId: userId,
+                      dessertId: widget.dessert["id"],
+                      quantity: 1,
+                      price: widget.dessert['price'],
+                      imageUrl: widget.dessert['imageUrl'],
+                      name: widget.dessert['name'],
+                    );
 
-               
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Postre agregado al carrito"),
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Postre agregado al carrito"),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(191, 82, 105, 1),
+                    foregroundColor: Colors.white,
+                    elevation: 5,
+                    padding: const EdgeInsets.all(10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromRGBO(191, 82, 105, 1),
-                foregroundColor: Colors.white,
-                elevation: 5,
-                padding: const EdgeInsets.all(10),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  child: const Icon(
+                    Icons.shopping_cart,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              child: const Icon(
-                Icons.shopping_cart,
-                color: Colors.black,
-              ),
+                SizedBox(width: 5),
+                //Boton Personalize
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => MyPostresPersonalizados(
+                                  dessertId: widget.dessert["id"],
+                                  imageURL: widget.dessert["imageUrl"],
+                                  name: widget.dessert["name"],
+                                )));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(191, 82, 105, 1),
+                    foregroundColor: Colors.white,
+                    elevation: 5,
+                    padding: const EdgeInsets.all(10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.edit,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -135,4 +153,3 @@ class _DessertDetailScreenState extends State<DessertDetailScreen> {
     );
   }
 }
-

@@ -24,7 +24,7 @@ class _ShopcartScreenState extends State<ShopcartScreen> {
         automaticallyImplyLeading: false,
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        stream: _crudBakery.getCart(user), 
+        stream: _crudBakery.getCart(user),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -46,33 +46,34 @@ class _ShopcartScreenState extends State<ShopcartScreen> {
           }
 
           final List<dynamic> items = cartData["items"] ?? [];
-          final double totalCarrito = cartData["total"] ?? 0.0; 
+          final double totalCarrito = cartData["total"] ?? 0.0;
           return Column(
             children: [
-             
               Expanded(
                 child: ListView.builder(
                   itemCount: items.length,
                   itemBuilder: (context, index) {
                     final item = items[index] as Map<String, dynamic>?;
                     if (item == null) {
-                      return const Center(child: Text("Producto no disponible"));
+                      return const Center(
+                          child: Text("Producto no disponible"));
                     }
 
-                    final name = item["name"] as String? ?? "Nombre no disponible";
+                    final name =
+                        item["name"] as String? ?? "Nombre no disponible";
                     final price = item["price"] as double? ?? 0.0;
                     final imageUrl = item["imageUrl"] as String?;
                     final quantity = item["quantity"] as int? ?? 0;
                     final dessertId = item["dessertId"] as String?;
 
-                    
                     final totalPorProducto = quantity * price;
 
                     return Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 4),
                       elevation: 10,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -85,24 +86,23 @@ class _ShopcartScreenState extends State<ShopcartScreen> {
                               fit: BoxFit.cover,
                             )
                           else
-                            const Icon(Icons.image, size: 100), 
-
+                            const Icon(Icons.image, size: 100),
                           ListTile(
                             title: Text(name),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('Cantidad: $quantity'),
-                                Text('Precio unitario: Lps.${price.toStringAsFixed(2)}'),
-                                Text('Total: Lps.${totalPorProducto.toStringAsFixed(2)}'), 
+                                Text(
+                                    'Precio unitario: Lps.${price.toStringAsFixed(2)}'),
+                                Text(
+                                    'Total: Lps.${totalPorProducto.toStringAsFixed(2)}'),
                               ],
                             ),
                           ),
-                       
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                             
                               IconButton(
                                 icon: const Icon(Icons.remove),
                                 onPressed: () async {
@@ -110,7 +110,7 @@ class _ShopcartScreenState extends State<ShopcartScreen> {
                                     await _crudBakery.addToCart(
                                       userId: user,
                                       dessertId: dessertId,
-                                      quantity: -1, 
+                                      quantity: -1,
                                       name: name,
                                       price: price,
                                       imageUrl: imageUrl ?? "",
@@ -118,9 +118,7 @@ class _ShopcartScreenState extends State<ShopcartScreen> {
                                   }
                                 },
                               ),
-                              
                               Text("$quantity"),
-                             
                               IconButton(
                                 icon: const Icon(Icons.add),
                                 onPressed: () async {
@@ -128,7 +126,7 @@ class _ShopcartScreenState extends State<ShopcartScreen> {
                                     await _crudBakery.addToCart(
                                       userId: user,
                                       dessertId: dessertId,
-                                      quantity: 1, 
+                                      quantity: 1,
                                       name: name,
                                       price: price,
                                       imageUrl: imageUrl ?? "",
@@ -136,12 +134,12 @@ class _ShopcartScreenState extends State<ShopcartScreen> {
                                   }
                                 },
                               ),
-
-                               IconButton(
+                              IconButton(
                                 icon: const Icon(Icons.delete),
                                 onPressed: () async {
-                                  if(dessertId != null){
-                                  await _crudBakery.removeFromCart(userId: user, dessertId: dessertId);
+                                  if (dessertId != null) {
+                                    await _crudBakery.removeFromCart(
+                                        userId: user, dessertId: dessertId);
                                   }
                                 },
                               ),
@@ -153,7 +151,6 @@ class _ShopcartScreenState extends State<ShopcartScreen> {
                   },
                 ),
               ),
-           
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
@@ -165,13 +162,12 @@ class _ShopcartScreenState extends State<ShopcartScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(width: 180,),
-                     IconButton(
-                                icon: const Icon(Icons.delete_forever),
-                                onPressed: () async {
-                                  await _crudBakery.clearCart(user);
-                                },
-                              ),
+                    IconButton(
+                      icon: const Icon(Icons.delete_forever),
+                      onPressed: () async {
+                        await _crudBakery.clearCart(user);
+                      },
+                    ),
                   ],
                 ),
               ),
