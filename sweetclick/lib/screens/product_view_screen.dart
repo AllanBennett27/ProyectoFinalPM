@@ -27,7 +27,7 @@ class _DessertDetailScreenState extends State<DessertDetailScreen> {
       appBar: AppBar(
         title: Text(widget.dessert['name']),
         centerTitle: true,
-        backgroundColor: Colors.pink,
+        backgroundColor: Color.fromRGBO(191, 82, 105, 1),
       ),
       body: Stack(
         children: [
@@ -116,7 +116,7 @@ class _DessertDetailScreenState extends State<DessertDetailScreen> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.pink,
+                backgroundColor: Color.fromRGBO(191, 82, 105, 1),
                 foregroundColor: Colors.white,
                 elevation: 5,
                 padding: const EdgeInsets.all(10),

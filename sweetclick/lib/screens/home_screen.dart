@@ -41,7 +41,7 @@ class HomePageState extends State<Home_screen> {
                     child: Text(
                       "¿Que se antoja hoy?",
                       style: TextStyle(
-                        backgroundColor: Colors.pink,
+                        backgroundColor: Color.fromRGBO(191, 82, 105, 1),
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 24,

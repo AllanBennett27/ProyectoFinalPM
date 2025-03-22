@@ -75,7 +75,7 @@ class InitialScreen extends StatefulWidget {
             return Container(
                 margin: EdgeInsets.all(8), 
                 decoration: BoxDecoration(
-                color: Colors.pink, 
+                color: Color.fromRGBO(191, 82, 105, 1),
                 borderRadius: BorderRadius.circular(8),
 
                 
@@ -104,7 +104,7 @@ class InitialScreen extends StatefulWidget {
              DrawerHeader(
               
               decoration: BoxDecoration(
-                color: Colors.pink,
+                color: Color.fromRGBO(191, 82, 105, 1),
               
                 ),
               
@@ -143,7 +143,7 @@ class InitialScreen extends StatefulWidget {
               
             ),
                ListTile(
-                leading: Icon(Icons.home, color: Colors.pink),
+                leading: Icon(Icons.home, color: Color.fromRGBO(191, 82, 105, 1)),
                 title: Text('Home'),                
                 onTap: () {
                  
@@ -153,7 +153,7 @@ class InitialScreen extends StatefulWidget {
                 },
               ),
                ListTile(
-                leading: Icon(Icons.shopping_cart, color: Colors.pink),
+                leading: Icon(Icons.shopping_cart, color: Color.fromRGBO(191, 82, 105, 1)),
                 title: Text('shopping_cart'),
                 onTap: () {
                   _onItemTapped(1);
@@ -163,7 +163,7 @@ class InitialScreen extends StatefulWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.person, color: Colors.pink),
+                leading: Icon(Icons.person, color: Color.fromRGBO(191, 82, 105, 1)),
                 title: Text('User'),
                 onTap: () {
                   _onItemTapped(2);
@@ -173,7 +173,7 @@ class InitialScreen extends StatefulWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.logout_outlined, color: Colors.pink),
+                leading: Icon(Icons.logout_outlined, color: Color.fromRGBO(191, 82, 105, 1)),
                 title: Text('Logout'),
                 onTap: () {
                   FirebaseAuth.instance.signOut();
@@ -184,7 +184,7 @@ class InitialScreen extends StatefulWidget {
               ),
               if( user == "5gHtW0ewpjWc3sKPKLrNdNGWfwl1" || user == "OKcD1keUMcX6bwNvsepZ7JzTIu72")
                ListTile(
-                leading: Icon(Icons.control_point, color: Colors.pink),
+                leading: Icon(Icons.control_point, color: Color.fromRGBO(191, 82, 105, 1)),
                 title: Text('Manage desserts'),
                 onTap: () {
                   
@@ -226,7 +226,7 @@ class InitialScreen extends StatefulWidget {
       bottomNavigationBar: Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10), 
       decoration: BoxDecoration(
-        color: Colors.pink, 
+        color: Color.fromRGBO(191, 82, 105, 1), 
         borderRadius: BorderRadius.circular(20), 
       ),
       child: ClipRRect( 
