@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sweetclick/authentication/register.dart';
-
 import 'package:sweetclick/screens/initial_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -96,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           builder: (_) => InitialScreen(
                                 initialValue: user.displayName ?? "Usuario",
                                 PfpValue: user.photoURL ??
-                                    "https://www.webiconio.com/_upload/255/image_255.svg",
+                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqVg_URh9Mvrm3NYaTlCUyiM7r382ohELc1g&s",
                               )),
                     );
                   }

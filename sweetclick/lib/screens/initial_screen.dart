@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sweetclick/authentication/login.dart';
 import 'package:sweetclick/screens/manage_desserts/manage_desserts.dart';
 import 'package:sweetclick/screens/home_screen.dart';
 import 'package:sweetclick/screens/shopcart_screen.dart';
@@ -21,28 +20,37 @@ class _InitialScreenState extends State<InitialScreen> {
   final user = FirebaseAuth.instance.currentUser!.uid;
   late String username;
   late String pfpUrl;
+  late List<Widget> _screens;
 
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = [
-    Home_screen(),
-    ShopcartScreen(),
-    UserScreen(),
-  ];
+
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+  
+    
+  
 
   @override
   void initState() {
     super.initState();
     username = widget.initialValue;
     pfpUrl = widget.PfpValue;
+    _screens = _buildScreens();
     print("initial state ${widget.initialValue}");
     print("pfpUrl en InitialScreen: $pfpUrl");
+  }
+
+   List<Widget> _buildScreens() {
+    return [
+      Home_screen(),
+      ShopcartScreen(),
+      UserScreen(username: username, pfpUrl: pfpUrl),
+    ];
   }
 
   @override
@@ -134,16 +142,7 @@ class _InitialScreenState extends State<InitialScreen> {
                 Navigator.of(context).pop();
               },
             ),
-            ListTile(
-              leading: Icon(Icons.logout_outlined,
-                  color: Color.fromRGBO(191, 82, 105, 1)),
-              title: Text('Logout'),
-              onTap: () {
-                FirebaseAuth.instance.signOut();
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => LoginScreen()));
-              },
-            ),
+           
             if (user == "5gHtW0ewpjWc3sKPKLrNdNGWfwl1" ||
                 user == "OKcD1keUMcX6bwNvsepZ7JzTIu72")
               ListTile(
@@ -221,3 +220,5 @@ class _InitialScreenState extends State<InitialScreen> {
     );
   }
 }
+
+

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // import 'package:sweetclick/authentication/register.dart';
 import 'package:sweetclick/firebase_options.dart';
 import 'package:sweetclick/authentication/login.dart';
-import 'package:sweetclick/pantalla_exito.dart';
 import 'dart:async';
 //import 'package:sweetclick/login.dart';
 

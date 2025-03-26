@@ -1,20 +1,29 @@
-// import 'package:firebase_auth/firebase_auth.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:sweetclick/screens/product_view_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sweetclick/services/crud.dart';
+
 
 // ignore: camel_case_types
 class Home_screen extends StatefulWidget {
   const Home_screen({super.key});
 
   @override
-  State<StatefulWidget> createState() => HomePageState();
+  State<Home_screen> createState() => _Home_screenState();
 }
 
-class HomePageState extends State<Home_screen> {
+class _Home_screenState extends State<Home_screen> {
   final CRUDBakery _crudBakery = CRUDBakery();
-    final SearchController _searchController = SearchController();
+  final TextEditingController _searchController = TextEditingController();
+  String _currentSearchTerm = "";
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +31,7 @@ class HomePageState extends State<Home_screen> {
       backgroundColor: Colors.white70,
       body: Column(
         children: [
+       
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: SizedBox(
@@ -30,12 +40,10 @@ class HomePageState extends State<Home_screen> {
               child: Stack(
                 children: [
                   Image.network(
-                "https://media.tenor.com/CgRQNtNwE-oAAAAM/desserts-food.gif",
-                
+                    "https://media.tenor.com/CgRQNtNwE-oAAAAM/desserts-food.gif",
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,
-                    repeat: ImageRepeat.repeat,
                   ),
                   const Center(
                     child: Text(
@@ -52,127 +60,157 @@ class HomePageState extends State<Home_screen> {
               ),
             ),
           ),
+          
           const SizedBox(height: 20),
-          Center(
-            child: SearchAnchor(
-              searchController: _searchController,
-              builder: (BuildContext context, SearchController controller) {
-                return Container(
-                  height: 42,
-                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                  child: SearchBar(
-                    controller: _searchController,
-                    onTap: () {
-                      _searchController.openView();
-                    },
-                    onChanged: (_) {
-                      _searchController.openView();
-                    },
-                    leading: const Icon(Icons.search),
-                  ),
-                );
-              },
-              suggestionsBuilder:
-                  (BuildContext context, SearchController controller) {
-                final List<String> items = [
-                   'Tortas',
-                    'Postres fríos',
-                    'Postres calientes',
-                    'Galletas y brownies',
-                    'Helados',
-                    'Otros',
-                ];
-
-                return List<ListTile>.generate(items.length, (int index) {
-                  final String item = items[index];
-                  return ListTile(
-                    title: Text(item),
-                    onTap: () {
-                      setState(() {
-                        _searchController.closeView(item);
-                      });
-                    },
-                  );
+          
+        
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Buscar postres...',
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: _searchController.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          _searchController.clear();
+                          setState(() {
+                            _currentSearchTerm = "";
+                          });
+                        },
+                      )
+                    : null,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _currentSearchTerm = value.toLowerCase();
                 });
               },
             ),
           ),
-
-
-
-
+          
           const SizedBox(height: 10),
+          
+          
           StreamBuilder<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(
             stream: _crudBakery.getDesserts(), 
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return const Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 );
               }
+              
               if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Center(
-                  child: Text("No data here"),
+                return const Expanded(
+                  child: Center(
+                    child: Text("No hay productos disponibles"),
+                  ),
                 );
               }
-
+              
+              final filteredDesserts = snapshot.data!.where((doc) {
+                final dessert = doc.data();
+                return _currentSearchTerm.isEmpty ||
+                    dessert['name'].toString().toLowerCase().contains(_currentSearchTerm) ||
+                    dessert['type'].toString().toLowerCase().contains(_currentSearchTerm);
+              }).toList();
+              
+              if (filteredDesserts.isEmpty) {
+                return const Expanded(
+                  child: Center(
+                    child: Text("No se encontraron resultados"),
+                  ),
+                );
+              }
+              
               return Expanded(
                 child: GridView.builder(
+                  padding: const EdgeInsets.all(8),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    childAspectRatio: 1,
+                    childAspectRatio: 0.8,
                   ),
-                  itemCount: snapshot.data!.length,
+                  itemCount: filteredDesserts.length,
                   itemBuilder: (context, index) {
-                    var dessert = snapshot.data![index].data();
-                   
-                    if(_searchController.text.isEmpty || _searchController.text == dessert["type"].toString()){
-                    return SizedBox(
-                      width: 50,
-                      height: 150,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => DessertDetailScreen(dessert: dessert,),
-                            ),
-                          );
-                        },
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
+                    final dessert = filteredDesserts[index].data();
+                    
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => DessertDetailScreen(dessert: dessert),
                           ),
-                          margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-                          elevation: 10,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.network(
-                                dessert['imageUrl'],
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                              ),
-                              ListTile(
-                                title: Text(dessert['name']),
-                                subtitle: Text(
-                                  '${dessert['type']}\n Lps.${dessert['price']}',
+                        );
+                      },
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        margin: const EdgeInsets.all(4),
+                        elevation: 5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+                                child: Image.network(
+                                  dessert['imageUrl'],
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) => 
+                                    const Icon(Icons.broken_image, size: 50),
+                                  loadingBuilder: (context, child, loadingProgress) =>
+                                    loadingProgress == null ? child : const Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
                                 ),
                               ),
-                            
-                            ],
-                          ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      dessert['name'],
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      '${dessert['type']}\nLps. ${dessert['price']}',
+                                      style: TextStyle(
+                                        color: Colors.grey[700],
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     );
-                    }
-                    else {
-                      return const SizedBox.shrink(); 
-                    }
-                    },
+                  },
                 ),
               );
             },
